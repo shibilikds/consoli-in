@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script src="js.js"></script> 
     <title>Consoulium '25</title>
     <script src="https://cdn.tailwindcss.com?plugins=typography,line-clamp"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -1143,6 +1144,22 @@
             animate();
         })();
     </script>
+
+            <!-- Custom JS Slot (manual) -->
+            <!--
+                Place any manual or page-specific scripts below.
+                Examples:
+                  - Add an external file: <script src="js/custom-admin.js"></script>
+                  - Add inline script: <script>/* your code here */</script>
+                This slot is intentionally kept after the main site scripts so your
+                code can access page DOM elements and the site's helpers (e.g., lucide).
+            -->
+            <!-- Example commented include (uncomment to use) -->
+            <!-- <script src="js/custom-admin.js" defer></script> -->
+
+            <script id="custom-admin-inline">// Add inline admin page JS here (keeps separated)
+            // e.g. document.getElementById('ai-btn')?.addEventListener('click', () => { /* ... */ });
+            </script>
 </body>
 
 </html>
