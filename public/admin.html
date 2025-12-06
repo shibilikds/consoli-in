@@ -594,12 +594,20 @@
     <!-- AI Modal -->
     <div id="ai-modal"
         class="fixed inset-0 z-[100] flex items-center justify-center bg-brand-charcoal/90 backdrop-blur-sm hidden animate-in fade-in duration-300">
+
         <div
             class="bg-brand-dark border border-brand-teal/30 rounded-[2rem] w-full max-w-md p-8 shadow-2xl relative m-4">
+
+            <div id="survey-toast" style="font-family: 'Handjet', cursive; letter-spacing: 1px;"
+                class="hidden absolute -top-16 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full font-bold text-xl shadow-2xl transition-all duration-300 transform scale-95 opacity-0 z-50 whitespace-nowrap">
+                ⚠️ Server Maintenance
+            </div>
+
             <button id="close-ai"
                 class="absolute top-6 right-6 p-2 bg-brand-light/5 rounded-full hover:bg-brand-light/10 transition-colors text-brand-light/60 hover:text-brand-light">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
+
             <div class="flex flex-col items-center text-center">
                 <div
                     class="w-24 h-24 rounded-full bg-gradient-to-tr from-brand-teal to-brand-dark mb-8 flex items-center justify-center shadow-lg shadow-brand-teal/20 animate-pulse border border-brand-teal/50 text-brand-light">
@@ -607,8 +615,9 @@
                 </div>
                 <h3 class="text-3xl font-bold mb-3 tracking-tight text-brand-light">Consoulium AI</h3>
                 <p class="text-brand-light/60 mb-10 text-base">Your intelligent guide to the festival experience.</p>
-                <button
-                    class="flex items-center gap-4 p-4 rounded-2xl bg-brand-light/5 hover:bg-brand-teal hover:text-white transition-all group w-full text-left border border-brand-light/5 hover:border-brand-teal">
+
+                <button onclick="showSurveyPopup()"
+                    class="flex items-center gap-4 p-4 rounded-2xl bg-brand-light/5 hover:bg-brand-teal hover:text-white transition-all group w-full text-left border border-brand-light/5 hover:border-brand-teal relative overflow-hidden">
                     <div
                         class="w-12 h-12 bg-brand-light/10 group-hover:bg-brand-light/20 rounded-full flex items-center justify-center shadow-sm shrink-0 transition-colors text-brand-light group-hover:text-white">
                         <i data-lucide="message-square" class="w-5 h-5"></i>
@@ -622,6 +631,25 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function showSurveyPopup() {
+            const toast = document.getElementById('survey-toast');
+
+            toast.classList.remove('hidden');
+
+            setTimeout(() => {
+                toast.classList.remove('scale-95', 'opacity-0');
+                toast.classList.add('scale-100', 'opacity-100', '-translate-y-2');
+            }, 10);
+
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('scale-95', 'opacity-0', 'hidden');
+                toast.classList.remove('scale-100', 'opacity-100', '-translate-y-2');
+            }, 3000);
+        }
+    </script>
 
     <!-- News Modal -->
     <div id="news-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 hidden">
@@ -835,17 +863,11 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
              <div class="absolute bottom-0 left-0 w-full p-8 md:p-12 text-brand-light z-20">
                         <div class="max-w-4xl">
-                            <div class="flex items-center gap-4 mb-4">
-                                <span class="bg-brand-yellow text-brand-charcoal px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider shadow-lg">Event</span>
-                                <span class="text-sm font-medium flex items-center gap-2 bg-brand-charcoal/60 px-3 py-1 rounded-full backdrop-blur-md border border-white/10 shadow-lg">
-                                    <i data-lucide="calendar" class="w-3 h-3 text-brand-teal"></i> ${event.date}
-                                </span>
+                            
                             </div>
                             <h3 class="text-4xl md:text-6xl font-medium mb-4 leading-tight drop-shadow-xl">${event.title}</h3>
                             <p class="text-brand-light/90 md:text-xl line-clamp-2 mb-8 max-w-2xl drop-shadow-md font-medium">${event.description}</p>
-                            <button class="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md text-brand-light font-bold text-sm uppercase tracking-widest flex items-center gap-3 transition-all hover:gap-4 group-hover/btn">
-                                View Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </button>
+                            
                         </div>
                     </div>
                 `;
