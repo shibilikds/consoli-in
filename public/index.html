@@ -1016,7 +1016,7 @@
         </div>
 
         <aside class="side-menu">
-            <a data-wf--side-menu-item--variant="orange" href="https://consouium.festie.app/candidate" class="side-menu-item w-inline-block" onclick="document.dispatchEvent(new CustomEvent('viewLeaderboard'));">
+            <a data-wf--side-menu-item--variant="orange" href="admin.html#results" class="side-menu-item w-inline-block" onclick="document.dispatchEvent(new CustomEvent('viewLeaderboard'));">
                 <div class="side-menu-item-content">
                     <div class="display-xl side-menu-item-text">Result</div>
                     <div class="display-xl side-menu-item-number">01</div>
@@ -1025,17 +1025,17 @@
                     <div class="side-menu-item-line"></div>
                 </div>
             </a>
-            <a data-wf--side-menu-item--variant="purple" href="https://offcampus.festie.app/candidate"
+            <a data-wf--side-menu-item--variant="purple" href="admin.html#news"
                 class="side-menu-item w-variant-98830983-c367-fbf4-c701-6d63ec3e45e0 w-inline-block">
                 <div class="side-menu-item-content">
-                    <div class="display-xl side-menu-item-text">Campus  Result</div>
+                    <div class="display-xl side-menu-item-text">Updates</div>
                     <div class="display-xl side-menu-item-number">02</div>
                 </div>
                 <div class="side-menu-item-line-wrapper">
                     <div class="side-menu-item-line"></div>
                 </div>
             </a>
-            <a data-wf--side-menu-item--variant="blue" href="https://offcampus.festie.app/gallery" target="_blank"
+            <a data-wf--side-menu-item--variant="blue" href="admin.html" target="_blank"
                 class="side-menu-item w-variant-779728d0-79b4-928c-a6b8-1135371dc2b5 w-inline-block">
                 <div class="side-menu-item-content">
                     <div class="display-xl side-menu-item-text">Explore</div>
@@ -1051,20 +1051,20 @@
     <!-- 4. FULL MENU OVERLAY -->
     <div class="menu" id="full-menu">
         <div class="menu-close-btn" onclick="toggleMenu()">✕</div>
-        <a data-wf--menu-item--variant="orange" href="https://consouium.festie.app/candidate" class="menu-item w-inline-block" onclick="document.dispatchEvent(new CustomEvent('viewLeaderboard'));">
+        <a data-wf--menu-item--variant="orange" href="admin.html#results" class="menu-item w-inline-block" onclick="document.dispatchEvent(new CustomEvent('viewLeaderboard'));">
             <div class="display-xl">Result</div>
             <div class="menu-item-line"></div>
             <div class="display-xl menu-item-number">01</div>
         </a>
-        <a data-wf--menu-item--variant="purple" href="https://offcampus.festie.app/candidate"
+        <a data-wf--menu-item--variant="purple" href="admin.html#news"
             class="menu-item w-variant-5f106ccb-1f9f-4f62-57e9-097d1bd87110 w-inline-block">
-            <div class="display-xl">campus result</div>
+            <div class="display-xl">Updates</div>
             <div class="menu-item-line"></div>
             <div class="display-xl menu-item-number">02</div>
         </a>
-        <a data-wf--menu-item--variant="blue" href="https://offcampus.festie.app/gallery"
+        <a data-wf--menu-item--variant="blue" href="admin.html"
             class="menu-item w-variant-d21aef03-c554-367a-3c3f-da5238a5be73 w-inline-block">
-            <div class="display-xl">explore</div>
+            <div class="display-xl">Explore</div>
             <div class="menu-item-line"></div>
             <div class="display-xl menu-item-number">03</div>
         </a>
@@ -1180,20 +1180,29 @@
             });
         }
 
+        // Robust hamburger toggle: clears any pending hide timer and avoids race conditions
+        let __menuHideTimer = null;
         function toggleMenu() {
             const menu = document.getElementById('full-menu');
             if (!menu) return;
-            
+
             if (menu.classList.contains('active')) {
+                // Close menu: remove active then hide after transition
                 menu.classList.remove('active');
-                setTimeout(() => { 
-                    menu.style.display = 'none'; 
+                if (__menuHideTimer) clearTimeout(__menuHideTimer);
+                __menuHideTimer = setTimeout(() => {
+                    menu.style.display = 'none';
+                    __menuHideTimer = null;
                 }, 500);
             } else {
+                // Open menu: cancel any pending hide and show
+                if (__menuHideTimer) { clearTimeout(__menuHideTimer); __menuHideTimer = null; }
                 menu.style.display = 'flex';
-                // Trigger reflow
-                void menu.offsetWidth;
-                menu.classList.add('active');
+                // ensure layout has applied before adding active class
+                requestAnimationFrame(() => {
+                    void menu.offsetWidth;
+                    menu.classList.add('active');
+                });
             }
         }
 
