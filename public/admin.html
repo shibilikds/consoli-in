@@ -39,6 +39,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
 
         .custom-scrollbar::-webkit-scrollbar {
@@ -67,7 +68,25 @@
             scrollbar-width: none;
         }
 
-        /* Animation utilities */
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+            will-change: opacity, transform; /* Performance hint */
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered delay for child elements */
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+
+        /* Initial Load Animations */
         .animate-in {
             animation: fadeIn 0.8s ease-out forwards;
             opacity: 0;
@@ -83,27 +102,16 @@
             transform: translateY(100%);
         }
 
-        .delay-100 { animation-delay: 100ms; }
-        .delay-300 { animation-delay: 300ms; }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes slideUpFull {
-            to { transform: translateY(0); opacity: 1; }
-        }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes slideUp { to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUpFull { to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 
-<body class="min-h-screen bg-brand-dark text-brand-light font-sans selection:bg-brand-pink/50">
+<body class="min-h-screen bg-brand-dark text-brand-light font-sans selection:bg-brand-pink/50 overflow-x-hidden">
 
     <!-- Header -->
-    <header class="sticky top-0 z-50 w-full bg-brand-dark/90 backdrop-blur-md border-b border-brand-teal/20 transition-all duration-300">
+    <header class="sticky top-0 z-50 w-full bg-brand-dark/90 backdrop-blur-md border-b border-brand-teal/20 transition-all duration-300 reveal active">
         <div class="container mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3 group">
                 <div class="w-8 h-8 md:w-10 md:h-10 relative flex items-center justify-center bg-brand-light/10 rounded-lg overflow-hidden border border-brand-teal/30 group-hover:border-brand-yellow/50 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-[0_0_15px_rgba(233,196,106,0.4)]">
@@ -130,16 +138,15 @@
                 </div>
             </nav>
 
-            <!-- Mobile Menu Toggle -->
             <button id="mobile-menu-btn" class="md:hidden text-brand-light p-2 rounded-lg hover:bg-brand-light/10 active:scale-95 transition-all">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
 
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-brand-dark/95 backdrop-blur-xl border-b border-brand-teal/20 shadow-2xl max-h-[calc(100vh-4rem)] overflow-y-auto z-40 transition-all">
             <div class="p-6 flex flex-col gap-6">
                 <a href="#" class="text-xl font-medium text-brand-light hover:text-brand-yellow transition-colors">Home</a>
+                <a href="#about" class="text-xl font-medium text-brand-light/80 hover:text-brand-yellow transition-colors">About</a>
                 <div class="flex flex-col gap-4 pl-4 border-l-2 border-brand-teal/20">
                     <a href="#results" class="text-lg font-medium text-brand-light/80 hover:text-brand-teal transition-colors">Results</a>
                     <a href="#news" class="text-lg font-medium text-brand-light/80 hover:text-brand-teal transition-colors">News</a>
@@ -150,11 +157,10 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative px-4 md:px-6 py-4 md:py-8">
-        <div id="hero-container" class="relative w-full h-[85vh] md:h-[85vh] min-h-[550px] rounded-[1.5rem] md:rounded-[3rem] overflow-hidden group border-2 md:border-4 border-brand-teal/20 bg-brand-charcoal shadow-2xl">
+    <section class="relative px-4 md:px-6 py-4 md:py-6">
+        <div id="hero-container" class="relative w-full h-[85vh] md:h-[85vh] min-h-[550px] rounded-[1.5rem] md:rounded-[3rem] overflow-hidden group border-2 md:border-4 border-brand-teal/20 bg-brand-charcoal shadow-2xl reveal active">
             <!-- Videos -->
             <div class="absolute inset-0 w-full h-full" id="hero-videos">
-                <!-- Video items injected via JS -->
                 <div class="absolute inset-0 w-full h-full bg-brand-charcoal animate-pulse"></div>
             </div>
 
@@ -204,13 +210,10 @@
     </section>
 
     <!-- Features (Canvas Animations) -->
-    <!-- Reduced padding to bring sections closer -->
-    <section class="py-8 md:py-32 px-4 md:px-6 container mx-auto overflow-hidden">
-        
-        <!-- Row 1: Theme Philosophy + Atomic Animation -->
-        <!-- Reduced gap and bottom margin to remove empty space -->
-        <div class="flex flex-col md:flex-row items-center gap-6 md:gap-24 mb-12 md:mb-32 relative">
-            <div class="md:w-1/2 relative z-10">
+    <section class="py-12 md:py-20 px-4 md:px-6 container mx-auto overflow-hidden">
+        <!-- Row 1 -->
+        <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16 mb-12 md:mb-20 relative">
+            <div class="md:w-1/2 relative z-10 text-center md:text-left reveal">
                 <div class="bg-brand-charcoal border border-brand-teal/30 p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] relative text-brand-light shadow-2xl hover:border-brand-yellow/50 transition-colors duration-500">
                     <div class="absolute -top-10 left-8 md:-top-12 md:left-12 w-12 h-12 md:w-16 md:h-16 text-brand-yellow">
                         <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="w-full h-full transform -rotate-12">
@@ -219,57 +222,48 @@
                         </svg>
                     </div>
                     <h2 class="text-4xl md:text-6xl font-medium leading-tight mb-6 md:mb-8">THEME <br /> <span class="font-pixel text-brand-pink">PHILOSOPHY</span></h2>
-                    <p class="text-base md:text-lg text-brand-light/80 leading-relaxed">Our philosophy challenges the obsession with "bigness" by shifting the lens to the microscopic foundations of existence.</p>
+                    <p class="text-base md:text-lg text-brand-light/80 leading-relaxed text-justify md:text-left">Our philosophy challenges the obsession with "bigness" by shifting the lens to the microscopic foundations of existence.</p>
                 </div>
             </div>
             
-            <!-- Atomic Animation Container -->
-            <div class="md:w-1/2 flex justify-center relative">
-                <!-- Kept aspect-square for atomic as it is circular, but reduced margins above/below -->
+            <div class="md:w-1/2 flex justify-center relative reveal delay-200">
                 <div id="atomic-container" class="relative w-full aspect-square md:max-w-[500px] lg:max-w-[700px] flex items-center justify-center">
                     <canvas id="atomicCanvas" class="w-full h-full"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- Row 2: DNA Animation + Spirituality Text -->
-        <div class="flex flex-col-reverse md:flex-row items-center gap-6 md:gap-24 relative">
-            
-            <!-- DNA Animation Container -->
-            <!-- Changed aspect ratio from square to rectangular (aspect-[4/3]) on mobile to reduce vertical whitespace -->
-            <div class="md:w-1/2 flex justify-center relative w-full">
+        <!-- Row 2 -->
+        <div class="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-16 relative">
+            <div class="md:w-1/2 flex justify-center relative w-full reveal">
                 <div id="dna-container" class="relative w-full aspect-[4/3] md:aspect-square md:max-w-[500px] lg:max-w-[700px] flex items-center justify-center">
                     <canvas id="dnaCanvas" class="w-full h-full"></canvas>
                 </div>
             </div>
             
-            <div class="md:w-1/2 relative z-10">
-                <div class="bg-brand-charcoal border border-brand-teal/30 p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] relative text-right text-brand-light shadow-2xl hover:border-brand-pink/50 transition-colors duration-500">
+            <div class="md:w-1/2 relative z-10 text-center md:text-right reveal delay-200">
+                <div class="bg-brand-charcoal border border-brand-teal/30 p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] relative text-brand-light shadow-2xl hover:border-brand-pink/50 transition-colors duration-500">
                     <h2 class="text-4xl md:text-6xl font-medium leading-tight mb-6 md:mb-8">Spirituality <br /> <span class="font-pixel text-brand-yellow">In the Small:</span></h2>
-                    <p class="text-base md:text-lg text-brand-light/80 leading-relaxed">Just as a single atom holds immense energy, our small charities, kind words, and gentle smiles carry profound spiritual weight.</p>
+                    <p class="text-base md:text-lg text-brand-light/80 leading-relaxed text-justify md:text-right">Just as a single atom holds immense energy, our small charities, kind words, and gentle smiles carry profound spiritual weight.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NEW Result Preview Section (Slideable on Mobile) -->
-    <section id="results" class="py-16 md:py-24 bg-brand-dark relative overflow-hidden text-brand-light border-t border-brand-light/5">
+    <!-- NEW Result Preview Section -->
+    <section id="results" class="py-12 md:py-16 bg-brand-dark relative overflow-hidden text-brand-light border-t border-brand-light/5">
         <div class="absolute inset-0 bg-brand-gradient opacity-10 z-0 pointer-events-none"></div>
         <div class="container mx-auto px-4 md:px-6 relative z-10">
-            <div class="text-center mb-10 md:mb-16">
+            <div class="text-center mb-8 md:mb-12 reveal">
                 <h2 class="text-4xl md:text-6xl lg:text-7xl font-medium mb-4 leading-tight">
                     Live <span class="font-pixel text-brand-teal">Results</span> <br />
                     <span class="text-2xl md:text-4xl text-brand-light/60 mt-2 block font-normal">Select Your Portal</span>
                 </h2>
             </div>
 
-            <!-- Slide Container: Flex on Mobile (Slide), Grid on Desktop -->
-            <!-- Adjusted padding-x for mobile to allow first card to align with edge -->
             <div class="flex md:grid md:grid-cols-2 gap-4 md:gap-10 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-8 md:pb-0 px-4 md:px-0 hide-scrollbar -mx-4 md:mx-0">
-
-                <!-- Card 1: Consoulium Portal -->
-                <!-- Use w-[85vw] or w-[90vw] for mobile to show a bit of the next card -->
-                <div class="min-w-[85vw] md:min-w-0 snap-center first:ml-4 md:first:ml-0 last:mr-4 md:last:mr-0 bg-brand-charcoal border border-brand-teal/30 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl hover:border-brand-yellow/50 transition-all duration-300 group flex flex-col">
+                <!-- Card 1 -->
+                <div class="min-w-[85vw] md:min-w-0 snap-center first:ml-4 md:first:ml-0 last:mr-4 md:last:mr-0 bg-brand-charcoal border border-brand-teal/30 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl hover:border-brand-yellow/50 transition-all duration-300 group flex flex-col reveal delay-100">
                     <div class="flex items-center justify-between mb-6">
                         <div class="flex items-center gap-3 md:gap-4">
                             <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand-teal/20 flex items-center justify-center text-brand-teal border border-brand-teal/30 shrink-0">
@@ -282,24 +276,20 @@
                         </div>
                         <span class="px-3 py-1 rounded-full bg-brand-teal/10 text-brand-teal text-xs font-bold border border-brand-teal/30 animate-pulse whitespace-nowrap">LIVE</span>
                     </div>
-                    
-                    <!-- Iframe Placeholder -->
                     <div class="rounded-xl overflow-hidden border border-brand-light/10 shadow-lg bg-black/40 h-[280px] md:h-[400px] relative mb-6">
                         <div class="absolute inset-0 flex flex-col items-center justify-center text-brand-light/30">
                             <i data-lucide="layout-template" class="w-12 h-12 mb-2 opacity-50"></i>
-                            <span class="text-sm">Consoulium </span>
+                            <span class="text-sm">Consoulium Portal Preview</span>
                         </div>
                         <iframe src="https://consouium.festie.app/candidate" title="Consoulium Candidate Portal" class="w-full h-full relative z-10" loading="lazy"></iframe>
                     </div>
-
-                    <!-- Button -->
                     <a href="https://consouium.festie.app/candidate" target="_blank" rel="noopener noreferrer" class="mt-auto w-full py-3 md:py-4 rounded-xl bg-brand-teal hover:bg-brand-yellow hover:text-brand-dark text-brand-dark font-bold border border-transparent transition-all flex items-center justify-center gap-2 group-hover:shadow-lg group-hover:shadow-brand-teal/20 active:scale-[0.98]">
                         Open Consoulium Portal <i data-lucide="external-link" class="w-4 h-4"></i>
                     </a>
                 </div>
 
-                <!-- Card 2: Campus Portal -->
-                <div class="min-w-[85vw] md:min-w-0 snap-center first:ml-4 md:first:ml-0 last:mr-4 md:last:mr-0 bg-brand-charcoal border border-brand-teal/30 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl hover:border-brand-yellow/50 transition-all duration-300 group flex flex-col">
+                <!-- Card 2 -->
+                <div class="min-w-[85vw] md:min-w-0 snap-center first:ml-4 md:first:ml-0 last:mr-4 md:last:mr-0 bg-brand-charcoal border border-brand-teal/30 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl hover:border-brand-yellow/50 transition-all duration-300 group flex flex-col reveal delay-200">
                     <div class="flex items-center justify-between mb-6">
                         <div class="flex items-center gap-3 md:gap-4">
                             <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand-yellow/20 flex items-center justify-center text-brand-yellow border border-brand-yellow/30 shrink-0">
@@ -312,8 +302,6 @@
                         </div>
                         <span class="px-3 py-1 rounded-full bg-brand-yellow/10 text-brand-yellow text-xs font-bold border border-brand-yellow/30 animate-pulse whitespace-nowrap">LIVE</span>
                     </div>
-
-                    <!-- Iframe Placeholder -->
                     <div class="rounded-xl overflow-hidden border border-brand-light/10 shadow-lg bg-black/40 h-[280px] md:h-[400px] relative mb-6">
                         <div class="absolute inset-0 flex flex-col items-center justify-center text-brand-light/30">
                             <i data-lucide="building-2" class="w-12 h-12 mb-2 opacity-50"></i>
@@ -321,15 +309,11 @@
                         </div>
                         <iframe src="https://offcampus.festie.app/candidate" title="Campus Portal" class="w-full h-full relative z-10" loading="lazy"></iframe>
                     </div>
-
-                    <!-- Button -->
                     <a href="https://offcampus.festie.app/candidate" target="_blank" rel="noopener noreferrer" class="mt-auto w-full py-3 md:py-4 rounded-xl bg-brand-teal/10 hover:bg-brand-teal text-brand-teal hover:text-white border border-brand-teal/30 transition-all font-bold flex items-center justify-center gap-2 active:scale-[0.98]">
                         Open Campus Portal <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
-
             </div>
-            <!-- Swipe Hint for Mobile -->
             <div class="md:hidden flex items-center justify-center gap-2 mt-4 text-brand-light/30 text-sm animate-pulse">
                 <i data-lucide="arrow-left" class="w-3 h-3"></i> <span>Swipe to explore</span> <i data-lucide="arrow-right" class="w-3 h-3"></i>
             </div>
@@ -337,12 +321,12 @@
     </section>
 
     <!-- Facts -->
-    <section class="py-16 md:py-24 bg-brand-dark relative overflow-hidden border-t border-brand-light/5">
+    <section class="py-12 md:py-16 bg-brand-dark relative overflow-hidden border-t border-brand-light/5">
         <div id="facts-shape" class="absolute top-0 right-0 -mr-24 -mt-24 w-64 h-64 md:w-96 md:h-96 bg-brand-teal rounded-full mix-blend-multiply filter blur-3xl opacity-20 z-0 pointer-events-none transition-transform duration-100 ease-out"></div>
         <div class="container mx-auto px-4 md:px-6 relative z-10">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-8">
                 <!-- Fact 1 -->
-                <div class="flex flex-col items-center text-center group">
+                <div class="flex flex-col items-center text-center group reveal delay-100">
                     <div class="w-16 h-16 md:w-20 md:h-20 rounded-[1.2rem] md:rounded-[1.5rem] bg-brand-light/5 flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 group-hover:bg-brand-light/10 transition-all duration-300 shadow-sm text-brand-yellow">
                         <i data-lucide="calendar" class="w-6 h-6 md:w-8 md:h-8"></i>
                     </div>
@@ -350,7 +334,7 @@
                     <div class="text-brand-light/50 font-bold uppercase tracking-widest text-xs md:text-sm">Days</div>
                 </div>
                 <!-- Fact 2 -->
-                <div class="flex flex-col items-center text-center group">
+                <div class="flex flex-col items-center text-center group reveal delay-200">
                     <div class="w-16 h-16 md:w-20 md:h-20 rounded-[1.2rem] md:rounded-[1.5rem] bg-brand-light/5 flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 group-hover:bg-brand-light/10 transition-all duration-300 shadow-sm text-brand-orange">
                         <i data-lucide="school" class="w-6 h-6 md:w-8 md:h-8"></i>
                     </div>
@@ -358,7 +342,7 @@
                     <div class="text-brand-light/50 font-bold uppercase tracking-widest text-xs md:text-sm">Campuses</div>
                 </div>
                 <!-- Fact 3 -->
-                <div class="flex flex-col items-center text-center group">
+                <div class="flex flex-col items-center text-center group reveal delay-300">
                     <div class="w-16 h-16 md:w-20 md:h-20 rounded-[1.2rem] md:rounded-[1.5rem] bg-brand-light/5 flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 group-hover:bg-brand-light/10 transition-all duration-300 shadow-sm text-brand-teal">
                         <i data-lucide="ticket" class="w-6 h-6 md:w-8 md:h-8"></i>
                     </div>
@@ -366,7 +350,7 @@
                     <div class="text-brand-light/50 font-bold uppercase tracking-widest text-xs md:text-sm">Events</div>
                 </div>
                 <!-- Fact 4 -->
-                <div class="flex flex-col items-center text-center group">
+                <div class="flex flex-col items-center text-center group reveal delay-100">
                     <div class="w-16 h-16 md:w-20 md:h-20 rounded-[1.2rem] md:rounded-[1.5rem] bg-brand-light/5 flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 group-hover:bg-brand-light/10 transition-all duration-300 shadow-sm text-brand-pink">
                         <i data-lucide="medal" class="w-6 h-6 md:w-8 md:h-8"></i>
                     </div>
@@ -378,30 +362,34 @@
     </section>
 
     <!-- News Section -->
-    <section id="news" class="py-16 md:py-24 bg-brand-charcoal relative overflow-hidden">
+    <section id="news" class="py-12 md:py-20 bg-brand-charcoal relative overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-full bg-brand-teal/5"></div>
         <div class="container mx-auto px-4 md:px-6 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-20 relative z-10 gap-8 md:gap-12">
-                <div class="max-w-xl">
-                    <h2 class="text-4xl md:text-7xl font-medium mb-4 md:mb-8 leading-tight text-brand-light text-left">News And <br /> <span class="font-pixel text-brand-orange">Updates</span></h2>
+            <div class="flex flex-col items-center text-center mb-10 md:mb-16 relative z-10 reveal">
+                <div class="max-w-2xl">
+                    <h2 class="text-4xl md:text-7xl font-medium mb-4 leading-tight text-brand-light">News And <br /> <span class="font-pixel text-brand-orange">Updates</span></h2>
                 </div>
             </div>
-            <div id="news-grid" class="grid md:grid-cols-3 gap-6 md:gap-8">
+            <!-- Auto-scrolling Flex Container -->
+            <div id="news-grid" class="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8 -mx-4 px-4 md:mx-0 md:px-0 reveal delay-200">
                 <!-- News Items Injected via JS -->
+            </div>
+            <div class="md:hidden flex items-center justify-center gap-2 mt-2 text-brand-light/30 text-sm animate-pulse">
+                <i data-lucide="arrow-left" class="w-3 h-3"></i> <span>Swipe to view more</span> <i data-lucide="arrow-right" class="w-3 h-3"></i>
             </div>
         </div>
     </section>
 
     <!-- Events Gallery (Floating Window) -->
-    <section id="events" class="py-16 md:py-24 bg-brand-dark overflow-hidden relative">
+    <section id="events" class="py-12 md:py-20 bg-brand-dark overflow-hidden relative">
         <div class="container mx-auto px-4 md:px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-10 md:mb-16">
-                <div class="max-w-2xl relative z-10">
-                    <h2 class="text-4xl md:text-7xl font-medium leading-tight mb-6 text-brand-light">Checkout our <br /> <span class="font-pixel text-brand-orange">Conso</span><br /> Events</h2>
+            <div class="flex flex-col items-center text-center mb-10 md:mb-16 reveal">
+                <div class="max-w-3xl relative z-10">
+                    <h2 class="text-4xl md:text-7xl font-medium leading-tight mb-6 text-brand-light">Checkout our <br /> <span class="font-pixel text-brand-orange">Conso</span> Events</h2>
                 </div>
             </div>
 
-            <div class="relative w-full max-w-6xl mx-auto shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] rounded-2xl border border-white/5 bg-brand-charcoal/50 backdrop-blur-2xl">
+            <div class="relative w-full max-w-6xl mx-auto shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] rounded-2xl border border-white/5 bg-brand-charcoal/50 backdrop-blur-2xl reveal delay-200">
                 <!-- Mac-like Header -->
                 <div class="h-10 md:h-12 bg-brand-charcoal/80 border-b border-white/5 flex items-center px-4 md:px-6 gap-2 rounded-t-2xl z-30 relative">
                     <div class="flex gap-2">
@@ -414,18 +402,15 @@
                 </div>
 
                 <!-- Carousel Content -->
-                <div class="relative h-[400px] md:h-[650px] overflow-hidden rounded-b-2xl group">
+                <div class="relative h-[400px] md:h-[650px] overflow-hidden rounded-b-2xl group cursor-grab active:cursor-grabbing">
                     <div id="carousel-slides" class="w-full h-full relative">
                         <!-- Slides injected via JS -->
                     </div>
-
-                    <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 flex gap-2 md:gap-3 z-30">
-                        <button id="prev-event" class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand-dark/50 hover:bg-brand-teal text-white border border-white/10 backdrop-blur-md flex items-center justify-center transition-all hover:scale-110 active:scale-95">
-                            <i data-lucide="arrow-left" class="w-4 h-4 md:w-5 md:h-5"></i>
-                        </button>
-                        <button id="next-event" class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand-dark/50 hover:bg-brand-teal text-white border border-white/10 backdrop-blur-md flex items-center justify-center transition-all hover:scale-110 active:scale-95">
-                            <i data-lucide="arrow-right" class="w-4 h-4 md:w-5 md:h-5"></i>
-                        </button>
+                    <!-- Touch/Swipe Hint Overlay (fades out) -->
+                    <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-0 md:opacity-0 transition-opacity duration-1000">
+                        <div class="bg-black/50 backdrop-blur-sm px-6 py-3 rounded-full text-white flex gap-3 items-center">
+                            <i data-lucide="move-horizontal" class="w-6 h-6"></i> <span>Swipe</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -433,15 +418,15 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="py-16 md:py-24 bg-brand-dark overflow-hidden">
+    <section class="py-12 md:py-20 bg-brand-dark overflow-hidden">
         <div class="container mx-auto px-4 md:px-6">
-            <div class="text-center mb-12 md:mb-20 relative">
+            <div class="text-center mb-10 md:mb-16 relative reveal">
                 <h2 class="text-4xl md:text-6xl font-medium mb-6 relative inline-block text-brand-light">What Our <span class="font-pixel text-brand-yellow">Members</span> <br /> Are Saying...</h2>
             </div>
             <div class="grid md:grid-cols-4 gap-6">
                 <!-- Static Testimonials -->
-                <div class="bg-brand-charcoal border border-brand-light/10 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between h-full min-h-[250px] md:min-h-[300px] hover:-translate-y-2 transition-transform duration-300 hover:border-brand-pink/30 mb-4 md:mb-0">
-                    <p class="text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-medium text-brand-light/80">"Consoulium has become an integral part of our institution's vision for holistic education, bridging tradition and modernity."</p>
+                <div class="bg-brand-charcoal border border-brand-light/10 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between h-full min-h-[250px] md:min-h-[300px] hover:-translate-y-2 transition-transform duration-300 hover:border-brand-pink/30 mb-4 md:mb-0 reveal delay-100">
+                    <p class="text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-medium text-brand-light/80 text-justify">"Consoulium has become an integral part of our institution's vision for holistic education, bridging tradition and modernity."</p>
                     <div class="flex items-center gap-4 mt-auto">
                         <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand-light/20 overflow-hidden shrink-0"><img src="image/profiles/thennala-usthad.jpg" onerror="this.src='https://placehold.co/48x48/1C1C1E/FFF'" alt="Principal" class="w-full h-full object-cover" /></div>
                         <div>
@@ -449,8 +434,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-brand-charcoal border border-brand-light/10 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between h-full min-h-[250px] md:min-h-[300px] hover:-translate-y-2 transition-transform duration-300 hover:border-brand-pink/30 mb-4 md:mb-0">
-                    <p class="text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-medium text-brand-light/80">"This festival has enhanced student development, especially in public speaking and critical thinking."</p>
+                <div class="bg-brand-charcoal border border-brand-light/10 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between h-full min-h-[250px] md:min-h-[300px] hover:-translate-y-2 transition-transform duration-300 hover:border-brand-pink/30 mb-4 md:mb-0 reveal delay-200">
+                    <p class="text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-medium text-brand-light/80 text-justify">"This festival has enhanced student development, especially in public speaking and critical thinking."</p>
                     <div class="flex items-center gap-4 mt-auto">
                         <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand-light/20 overflow-hidden shrink-0"><img src="image/profiles/dr-abdul-latheef.jpeg" onerror="this.src='https://placehold.co/48x48/1C1C1E/FFF'" alt="Head" class="w-full h-full object-cover" /></div>
                         <div>
@@ -458,8 +443,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-brand-charcoal border border-brand-light/10 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between h-full min-h-[250px] md:min-h-[300px] hover:-translate-y-2 transition-transform duration-300 hover:border-brand-pink/30 mb-4 md:mb-0">
-                    <p class="text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-medium text-brand-light/80">"I am impressed by how Consoulium has created a platform for students to express themselves."</p>
+                <div class="bg-brand-charcoal border border-brand-light/10 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between h-full min-h-[250px] md:min-h-[300px] hover:-translate-y-2 transition-transform duration-300 hover:border-brand-pink/30 mb-4 md:mb-0 reveal delay-300">
+                    <p class="text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-medium text-brand-light/80 text-justify">"I am impressed by how Consoulium has created a platform for students to express themselves."</p>
                     <div class="flex items-center gap-4 mt-auto">
                         <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand-light/20 overflow-hidden shrink-0"><img src="image/profiles/farooq-ust.jpg" onerror="this.src='https://placehold.co/48x48/1C1C1E/FFF'" alt="Alumni" class="w-full h-full object-cover" /></div>
                         <div>
@@ -467,8 +452,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-brand-charcoal border border-brand-light/10 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between h-full min-h-[250px] md:min-h-[300px] hover:-translate-y-2 transition-transform duration-300 hover:border-brand-pink/30 mb-4 md:mb-0">
-                    <p class="text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-medium text-brand-light/80">"The program has not only honed our students' academic abilities but also cultivated their ethical reasoning."</p>
+                <div class="bg-brand-charcoal border border-brand-light/10 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between h-full min-h-[250px] md:min-h-[300px] hover:-translate-y-2 transition-transform duration-300 hover:border-brand-pink/30 mb-4 md:mb-0 reveal delay-100">
+                    <p class="text-base md:text-lg leading-relaxed mb-6 md:mb-8 font-medium text-brand-light/80 text-justify">"The program has not only honed our students' academic abilities but also cultivated their ethical reasoning."</p>
                     <div class="flex items-center gap-4 mt-auto">
                         <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand-light/20 overflow-hidden shrink-0"><img src="image/profiles/olavattur-usthad.jpg" onerror="this.src='https://placehold.co/48x48/1C1C1E/FFF'" alt="Vice" class="w-full h-full object-cover" /></div>
                         <div>
@@ -481,7 +466,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="pt-10 pb-10 bg-brand-charcoal text-brand-light border-t border-brand-teal/20 font-sans">
+    <footer class="pt-10 pb-10 bg-brand-charcoal text-brand-light border-t border-brand-teal/20 font-sans reveal">
         <div class="container mx-auto px-4 md:px-6">
             <div class="flex flex-col items-center justify-center gap-6 md:hidden mb-8">
                 <div class="text-center">
@@ -503,7 +488,7 @@
                         <span class="font-sans text-3xl font-bold tracking-tighter text-brand-light">Consoulium</span>
                         <span class="text-[10px] uppercase tracking-widest text-brand-yellow font-medium">Cultural Festival '25</span>
                     </a>
-                    <p class="text-brand-light/60 text-sm leading-relaxed max-w-xs mt-6">Celebrating heritage, arts, and creativity.</p>
+                    <p class="text-brand-light/60 text-sm leading-relaxed max-w-xs mt-6 text-justify">Celebrating heritage, arts, and creativity.</p>
                 </div>
                 <div>
                     <h3 class="font-bold text-lg mb-6 text-brand-yellow">Contact Info</h3>
@@ -605,6 +590,24 @@
     </div>
 
     <script>
+        // --- SCROLL ANIMATION OBSERVER ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Stop observing once animated if desired, or keep to re-animate
+                    // observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
         // --- DATA ---
         const news = [
             { id: 1, title: "", category: "News", date: "", description: "", imageUrl: "image/news/e1.jpeg" },
@@ -646,11 +649,12 @@
         aiBtn.addEventListener('click', () => toggleAiModal(true));
         closeAi.addEventListener('click', () => toggleAiModal(false));
 
-        // News Logic
+        // News Logic (Updated for Slider/Swipe)
         const newsGrid = document.getElementById('news-grid');
         newsUpdates.forEach(item => {
             const div = document.createElement('div');
-            div.className = "group cursor-pointer flex flex-col h-full hover:scale-[1.02] active:scale-95 transition-transform duration-300";
+            // Slider classes: min-width for mobile scrolling
+            div.className = "group cursor-pointer flex flex-col h-full hover:scale-[1.02] active:scale-95 transition-transform duration-300 min-w-[85vw] md:min-w-[350px] snap-center shrink-0";
             div.innerHTML = `
                 <div class="overflow-hidden rounded-[2rem] mb-6 h-64 border-2 border-brand-light/5 group-hover:border-brand-yellow/50 transition-all relative">
                     <div class="absolute top-4 left-4 bg-brand-charcoal/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider z-10 shadow-sm text-brand-yellow border border-brand-light/10">${item.category}</div>
@@ -664,6 +668,19 @@
             newsGrid.appendChild(div);
         });
 
+        // News Auto-Scroll Logic
+        setInterval(() => {
+            if (newsGrid) {
+                // If scrolled to end, loop back to start, else scroll one card width
+                if (newsGrid.scrollLeft + newsGrid.clientWidth >= newsGrid.scrollWidth - 10) {
+                    newsGrid.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    const cardWidth = newsGrid.children[0].offsetWidth + 24; // Width + gap
+                    newsGrid.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                }
+            }
+        }, 4000);
+
         function openNewsModal(item) {
             document.getElementById('news-modal-img').src = item.imageUrl;
             document.getElementById('news-modal-category').innerText = item.category;
@@ -676,7 +693,7 @@
         closeNewsBtn.addEventListener('click', closeNews);
         closeNewsBg.addEventListener('click', closeNews);
 
-        // Carousel Logic
+        // Carousel Logic (Events - Auto Slide + Swipe, No Buttons)
         const slidesContainer = document.getElementById('carousel-slides');
         let currentEventIndex = 0;
 
@@ -751,17 +768,28 @@
             currentEventIndex = prevIndex;
         }
 
-        let autoPlayInterval = setInterval(slideLeftToRight, 8000);
-        document.getElementById('next-event').onclick = () => {
-            clearInterval(autoPlayInterval);
-            slideLeftToRight();
-            autoPlayInterval = setInterval(slideLeftToRight, 8000);
-        };
-        document.getElementById('prev-event').onclick = () => {
-            clearInterval(autoPlayInterval);
-            slideRightToLeft();
-            autoPlayInterval = setInterval(slideLeftToRight, 8000);
-        };
+        // Auto Play Events
+        let eventsAutoPlay = setInterval(slideLeftToRight, 4000);
+
+        // Touch Swipe Logic for Events
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slidesContainer.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+            clearInterval(eventsAutoPlay); // Pause on touch
+        }, {passive: true});
+
+        slidesContainer.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleEventSwipe();
+            eventsAutoPlay = setInterval(slideLeftToRight, 4000); // Resume
+        }, {passive: true});
+
+        function handleEventSwipe() {
+            if (touchEndX < touchStartX - 50) slideLeftToRight(); // Swipe Left -> Next
+            if (touchEndX > touchStartX + 50) slideRightToLeft(); // Swipe Right -> Prev
+        }
 
         const heroContainer = document.getElementById('hero-videos');
         const videos = ["video/highlites 1.mp4", "video/highlites_2.mp4", "video/highlites_3.mp4"];
@@ -794,14 +822,23 @@
             if (shape) shape.style.transform = `translateY(${scrollY * 0.03}px) rotate(${scrollY * 0.01}deg)`;
         });
 
-        // --- ATOMIC ANIMATION ---
+        // --- ATOMIC ANIMATION OPTIMIZED ---
         (function () {
             const canvas = document.getElementById('atomicCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             let width, height;
+            let isVisible = false;
             const colors = { teal: '#2A9D8F', orange: '#F4A261', yellow: '#E9C46A', centerDark: '#1C1C1E' };
             let particleSize = 6, ringRadiusX = 140, ringRadiusY = 50, gearRadius = 30;
+
+            // Visibility Check to Reduce Lag
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                });
+            }, { threshold: 0.1 });
+            observer.observe(canvas);
 
             function resize() {
                 const container = canvas.parentElement;
@@ -810,9 +847,8 @@
                 canvas.width = width;
                 canvas.height = height;
                 
-                // Adjust scale for mobile to make it look bigger
                 const isMobile = window.innerWidth < 768;
-                const baseScale = isMobile ? 380 : 500; // Smaller denominator = larger scale relative to width
+                const baseScale = isMobile ? 380 : 500;
                 
                 const scale = width / baseScale;
                 ringRadiusX = 140 * scale;
@@ -867,24 +903,35 @@
 
             let globalRot = 0;
             function animate() {
-                ctx.clearRect(0, 0, width, height);
-                globalRot += 0.005;
-                drawCenter(globalRot);
-                ctx.save(); ctx.translate(width / 2, height / 2); ctx.rotate(globalRot); ctx.translate(-width / 2, -height / 2);
-                rings.forEach(r => { r.update(); r.draw(); });
-                ctx.restore();
+                if (isVisible) {
+                    ctx.clearRect(0, 0, width, height);
+                    globalRot += 0.005;
+                    drawCenter(globalRot);
+                    ctx.save(); ctx.translate(width / 2, height / 2); ctx.rotate(globalRot); ctx.translate(-width / 2, -height / 2);
+                    rings.forEach(r => { r.update(); r.draw(); });
+                    ctx.restore();
+                }
                 requestAnimationFrame(animate);
             }
             animate();
         })();
 
-        // --- DNA ANIMATION (HORIZONTAL) ---
+        // --- DNA ANIMATION (HORIZONTAL) OPTIMIZED ---
         (function () {
             const canvas = document.getElementById('dnaCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             let width, height;
+            let isVisible = false;
             
+            // Visibility Check
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                });
+            }, { threshold: 0.1 });
+            observer.observe(canvas);
+
             const colors = { 
                 backbone: '#2A9D8F', 
                 rungs: ['#E9C46A', '#F4A261', '#F7B9B1', '#F8FAF3'] 
@@ -907,49 +954,51 @@
 
             let time = 0;
             function animate() {
-                ctx.clearRect(0, 0, width, height);
-                const particles = [];
-                const count = 30; 
-                const spacing = width / 20; 
-                const radius = height / 6; 
-                const startX = -(count * spacing) / 2; 
-                
-                time += 0.02;
+                if (isVisible) {
+                    ctx.clearRect(0, 0, width, height);
+                    const particles = [];
+                    const count = 30; 
+                    const spacing = width / 20; 
+                    const radius = height / 6; 
+                    const startX = -(count * spacing) / 2; 
+                    
+                    time += 0.02;
 
-                for (let i = 0; i < count; i++) {
-                    const x = startX + i * spacing; 
-                    const angle = (i * 0.2) + time;
-                    const y1 = Math.cos(angle) * radius;
-                    const z1 = Math.sin(angle) * radius;
-                    const y2 = Math.cos(angle + Math.PI) * radius;
-                    const z2 = Math.sin(angle + Math.PI) * radius;
-                    const c = colors.rungs[i % colors.rungs.length];
+                    for (let i = 0; i < count; i++) {
+                        const x = startX + i * spacing; 
+                        const angle = (i * 0.2) + time;
+                        const y1 = Math.cos(angle) * radius;
+                        const z1 = Math.sin(angle) * radius;
+                        const y2 = Math.cos(angle + Math.PI) * radius;
+                        const z2 = Math.sin(angle + Math.PI) * radius;
+                        const c = colors.rungs[i % colors.rungs.length];
 
-                    for (let j = 0; j <= 12; j++) {
-                        const t = j / 12;
-                        particles.push({
-                            x: x, 
-                            y: y1 + (y2 - y1) * t, 
-                            z: z1 + (z2 - z1) * t,
-                            r: 3, 
-                            c: c, 
-                            type: 'rung'
-                        });
+                        for (let j = 0; j <= 12; j++) {
+                            const t = j / 12;
+                            particles.push({
+                                x: x, 
+                                y: y1 + (y2 - y1) * t, 
+                                z: z1 + (z2 - z1) * t,
+                                r: 3, 
+                                c: c, 
+                                type: 'rung'
+                            });
+                        }
+                        particles.push({ x: x, y: y1, z: z1, r: 8, c: colors.backbone, type: 'backbone' });
+                        particles.push({ x: x, y: y2, z: z2, r: 8, c: colors.backbone, type: 'backbone' });
                     }
-                    particles.push({ x: x, y: y1, z: z1, r: 8, c: colors.backbone, type: 'backbone' });
-                    particles.push({ x: x, y: y2, z: z2, r: 8, c: colors.backbone, type: 'backbone' });
-                }
 
-                particles.sort((a, b) => b.z - a.z);
-                particles.forEach(p => {
-                    const pos = project(p.x, p.y, p.z);
-                    ctx.globalAlpha = p.type === 'rung' ? 0.7 : 1;
-                    ctx.beginPath(); 
-                    ctx.arc(pos.x, pos.y, Math.max(0, p.r * pos.scale), 0, Math.PI * 2);
-                    ctx.fillStyle = p.c; 
-                    ctx.fill(); 
-                    ctx.globalAlpha = 1;
-                });
+                    particles.sort((a, b) => b.z - a.z);
+                    particles.forEach(p => {
+                        const pos = project(p.x, p.y, p.z);
+                        ctx.globalAlpha = p.type === 'rung' ? 0.7 : 1;
+                        ctx.beginPath(); 
+                        ctx.arc(pos.x, pos.y, Math.max(0, p.r * pos.scale), 0, Math.PI * 2);
+                        ctx.fillStyle = p.c; 
+                        ctx.fill(); 
+                        ctx.globalAlpha = 1;
+                    });
+                }
                 requestAnimationFrame(animate);
             }
             animate();
